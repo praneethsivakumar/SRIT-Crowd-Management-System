@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SRIT Crowd Management System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600..800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#edf1f5;--card:#fff;--tile:#f3f6f9;--tx:#0c1b2e;--mu:#58697e;--ac:#2149c9;--onac:#fff;--bd:#dce3ec;--g:#15906a;--y:#c97a00;--r:#d63a36;--ink:#0b1f3a;--ink2:#123a72;--tw:60%;--th:85%;--disp:"Bricolage Grotesque",system-ui,sans-serif;--pad:max(14px,calc((100% - 1100px)/2 + 14px))}
+[data-theme=dark]{--bg:#070f1b;--card:#0e1a2c;--tile:#142339;--tx:#e6ecf5;--mu:#8da0ba;--ac:#6fa3ff;--onac:#08111e;--bd:#1f3150;--ink:#0a1830;--ink2:#0f3163}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+:focus-visible{outline:3px solid var(--ac);outline-offset:2px}header :focus-visible{outline-color:#fff}
+.ic{width:18px;height:18px;flex:none;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.logo{width:42px;height:42px;flex:none}
+@keyframes pop{from{opacity:0;transform:scale(.3)}}
+@keyframes drop{from{opacity:0;transform:translate(-50%,-10px)}}
+/* header + nav */
+header{background:radial-gradient(rgba(255,255,255,.08) 1.2px,transparent 1.7px) 0 0/16px 16px,linear-gradient(115deg,var(--ink),var(--ink2));color:#fff;padding:14px var(--pad);display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:12px}
+header h1{margin:0;font:700 1.2rem/1.15 var(--disp);letter-spacing:-.01em}header small{opacity:.8}
+.hc{display:flex;gap:8px;align-items:center;font-size:.8rem;flex-wrap:wrap}#clk{font-variant-numeric:tabular-nums;opacity:.85}
+.hc .btn{display:inline-flex;gap:6px;align-items:center}
+nav{display:flex;gap:2px;padding:0 var(--pad);background:var(--card);border-bottom:1px solid var(--bd);overflow-x:auto;position:sticky;top:0;z-index:5}
+nav button{display:flex;gap:8px;align-items:center;background:none;color:var(--mu);border:0;border-bottom:3px solid transparent;padding:13px 14px;font:inherit;font-weight:600;cursor:pointer;white-space:nowrap}
+nav button:hover{color:var(--tx)}nav button.on{color:var(--ac);border-bottom-color:var(--ac)}
+main{max-width:1100px;margin:auto;padding:16px 14px 40px;display:grid;gap:14px}
+/* cards */
+.card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:16px 18px}
+h2{margin:0 0 12px;font:650 1.08rem/1.25 var(--disp);letter-spacing:-.005em;display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between}
+.mu{color:var(--mu);font-size:.82rem}p.mu{margin:0 0 10px}
+.two{display:grid;gap:14px}@media(min-width:760px){.two{grid-template-columns:1fr 1fr}}
+/* hero: crowd dots */
+.hero{background:linear-gradient(120deg,var(--ink),var(--ink2));color:#fff;border-radius:16px;padding:clamp(18px,3vw,28px);display:grid;gap:24px}
+@media(min-width:800px){.hero{grid-template-columns:1.8fr 1fr;gap:32px}.hk{border-left:1px solid rgba(255,255,255,.16);padding-left:28px}}
+.hh{display:flex;align-items:flex-end;gap:16px;margin-bottom:20px;flex-wrap:wrap}
+.hp{font:800 clamp(3.4rem,9vw,5.2rem)/.85 var(--disp);letter-spacing:-.04em;font-variant-numeric:tabular-nums}.hp small{font-size:.4em;letter-spacing:0;margin-left:2px;opacity:.7}
+.hd b{display:block;font:650 1.1rem var(--disp)}.hd span{font-size:.82rem;opacity:.75}
+.dots{display:grid;grid-template-rows:repeat(4,1fr);grid-auto-flow:column;grid-auto-columns:1fr;gap:clamp(3px,.8vw,7px)}
+.dots i,.lf i{aspect-ratio:1;border-radius:50%;background:rgba(255,255,255,.14)}
+.dots i.l{background:var(--c)}.dots.fresh i.l{animation:pop .5s both;animation-delay:calc(var(--d)*32ms)}
+.tk{position:relative;height:26px;margin-top:4px}
+.tk span{position:absolute;top:0;transform:translateX(-50%);padding-top:8px;font-size:.72rem;color:rgba(255,255,255,.75);font-variant-numeric:tabular-nums}
+.tk span::before{content:"";position:absolute;top:0;left:50%;height:6px;width:1px;background:rgba(255,255,255,.6)}
+.lg{margin:8px 0 0;font-size:.78rem;opacity:.7}
+.k b{display:block;font:800 1.9rem/1.1 var(--disp);letter-spacing:-.02em}.k span{font-size:.8rem;color:rgba(255,255,255,.72)}
+.k+.k{margin-top:16px;padding-top:16px;border-top:1px solid rgba(255,255,255,.14)}
+/* zones */
+.zones{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px}
+.z{background:var(--tile);border-radius:12px;padding:12px 14px}
+.z .t{display:flex;justify-content:space-between;align-items:center;gap:8px;font-weight:600;font-size:.92rem}
+.zf{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.zp{font:800 1.9rem/1 var(--disp);letter-spacing:-.02em;font-variant-numeric:tabular-nums}.zp small{font-size:.85rem;font-weight:600;color:var(--mu);letter-spacing:0}
+.bar{position:relative;height:10px;background:var(--bd);border-radius:6px;margin:10px 0 8px;overflow:hidden}
+.bar::before,.bar::after{content:"";position:absolute;top:0;bottom:0;width:2px;background:var(--tile);z-index:1}
+.bar::before{left:var(--tw)}.bar::after{left:var(--th)}
+.bar i{display:block;height:100%;transition:width .5s}
+.tag{font-size:.7rem;font-weight:700;padding:3px 9px;border-radius:10px;color:#fff}
+.cb{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}.cb button{flex:1;min-width:44px;padding:12px 0;font-size:1.05rem}
+/* tables, alerts, forms */
+.sc{overflow-x:auto}.sc svg{width:100%;min-width:520px;height:auto}
+table{border-collapse:collapse;width:100%;font-size:.84rem;font-variant-numeric:tabular-nums}
+th,td{padding:7px 8px;text-align:center;border-bottom:1px solid var(--bd)}th{background:var(--tile);font-weight:600;color:var(--mu)}td.n,th.n{text-align:left;white-space:nowrap}
+.hm{border-collapse:separate;border-spacing:3px}.hm th,.hm td{border:0;border-radius:6px;padding:7px 4px}
+.alert{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;background:var(--tile);border-radius:8px;margin-bottom:6px;font-size:.88rem}
+.alert::before{content:"";flex:none;width:8px;height:8px;margin-top:.45em;border-radius:50%;background:var(--r)}
+input,select{padding:8px 10px;border-radius:8px;border:1px solid var(--bd);background:var(--card);color:var(--tx);font:inherit;max-width:100%}td input{width:100%}
+.btn,button.b{background:var(--ac);color:var(--onac);border:0;border-radius:9px;padding:9px 14px;cursor:pointer;font:600 .85rem system-ui,sans-serif;text-decoration:none;display:inline-block;transition:filter .15s,transform .1s}
+.btn:hover{filter:brightness(1.1)}.btn:active{transform:scale(.97)}
+.btn.s{background:rgba(255,255,255,.14);color:#fff;border:1px solid rgba(255,255,255,.22)}
+.btn.r{background:var(--r);color:#fff}.btn.g{background:var(--g);color:#fff}
+.btn.o{background:var(--tile);color:var(--tx);border:1px solid var(--bd)}
+iframe{width:100%;height:70vh;min-height:420px;border:1px solid var(--bd);border-radius:10px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:8px 0}
+#toast{position:fixed;top:12px;left:50%;transform:translateX(-50%);background:var(--r);color:#fff;padding:11px 18px;border-radius:10px;display:none;z-index:9;box-shadow:0 6px 18px #0006;animation:drop .25s}
+/* login */
+#login{min-height:100vh;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr)}
+.lp{background:linear-gradient(150deg,var(--ink),var(--ink2));color:#fff;padding:clamp(24px,5vw,56px);display:flex;flex-direction:column;justify-content:space-between;gap:32px}
+.lp h1{margin:0;font:700 1.1rem var(--disp)}.lp .brand{gap:12px}
+.lp h2{display:block;margin:0 0 14px;max-width:15ch;font:800 clamp(2.2rem,5vw,3.6rem)/1 var(--disp);letter-spacing:-.03em}
+.lp p{margin:0;max-width:42ch;opacity:.8;font-size:1rem}
+.lf{display:grid;grid-template-columns:repeat(24,1fr);gap:clamp(4px,.9vw,9px)}
+.lf i{animation:pop .6s both;animation-delay:calc(var(--d)*35ms)}.lf i.g{background:var(--g)}.lf i.y{background:var(--y)}.lf i.r{background:var(--r)}
+.lr{display:grid;place-content:center;padding:32px 20px}
+.lform{width:min(380px,100%);display:grid;gap:14px}.lform h2{display:block;font-size:1.6rem;margin:0}
+.lform label{display:grid;gap:6px;font-weight:600;font-size:.85rem}.lform input{padding:11px 12px;width:100%}.lform .btn{padding:12px 14px;font-size:.92rem}
+#le{color:var(--r);font-weight:600;min-height:1em}
+.or{display:flex;align-items:center;gap:10px;color:var(--mu);font-size:.8rem}.or::before,.or::after{content:"";flex:1;height:1px;background:var(--bd)}
+.hint{background:var(--tile);border-radius:10px;padding:10px 12px}
+@media(max-width:820px){#login{grid-template-columns:1fr}.lf i:nth-child(n+97){display:none}.lp h2{max-width:none}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media print{header,nav,.np{display:none!important}body{background:#fff}.card{break-inside:avoid}}
+</style></head><body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="i-logo" viewBox="0 0 40 40"><rect width="40" height="40" rx="10" fill="rgba(255,255,255,.14)"/><g fill="#fff"><circle cx="11" cy="11" r="3"/><circle cx="20" cy="11" r="3"/><circle cx="29" cy="11" r="3"/><circle cx="11" cy="20" r="3"/><circle cx="20" cy="20" r="3"/><circle cx="11" cy="29" r="3"/><circle cx="20" cy="29" r="3"/><circle cx="29" cy="29" r="3"/></g><circle cx="29" cy="20" r="3.6" fill="#f5b942"/></symbol>
+<symbol id="i-dash" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="4.5" rx="1.5"/><rect x="13.5" y="11" width="7" height="9.5" rx="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/></symbol>
+<symbol id="i-count" viewBox="0 0 24 24"><path d="M3.5 7h7M7 3.5v7M13.5 17h7"/></symbol>
+<symbol id="i-an" viewBox="0 0 24 24"><path d="M5 20v-8M12 20V5M19 20v-5"/></symbol>
+<symbol id="i-rep" viewBox="0 0 24 24"><path d="M6 3.5h8l4 4v13H6zM14 3.5v4h4M9 12h6M9 16h6"/></symbol>
+<symbol id="i-map" viewBox="0 0 24 24"><path d="M12 21s6-5.6 6-11a6 6 0 1 0-12 0c0 5.4 6 11 6 11z"/><circle cx="12" cy="10" r="2.2"/></symbol>
+<symbol id="i-set" viewBox="0 0 24 24"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></symbol>
+<symbol id="i-theme" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 0 0 16z" fill="currentColor"/></symbol>
+<symbol id="i-out" viewBox="0 0 24 24"><path d="M10 4H5.5v16H10M15 8l4 4-4 4M19 12H9"/></symbol>
+</defs></svg>
+<div id="toast"></div>
+<div id="login">
+ <div class="lp">
+  <div class="brand"><svg class="logo" aria-hidden="true"><use href="#i-logo"/></svg><h1>SRIT Crowd Management System</h1></div>
+  <div><h2>Know how full every part of campus is.</h2><p>Count people in and out of each zone, watch crowd levels live, and get an alert before an area gets too full.</p></div>
+  <div class="lf" id="lf" aria-hidden="true"></div>
+ </div>
+ <div class="lr"><div class="lform">
+  <div><h2>Sign in</h2><div class="mu">Sri Ramakrishna Institute of Technology</div></div>
+  <label>Username<input id="lu" autocomplete="username" placeholder="admin or security"></label>
+  <label>Password<input id="lp" type="password" autocomplete="current-password"></label>
+  <button class="btn" id="lb">Sign in</button><div id="le" role="alert"></div>
+  <div class="or">or</div>
+  <button class="btn o" id="pb">View as public (no login)</button>
+  <div class="mu hint" id="setupHint" style="display:none">Set an administrator and security password before staff can sign in.</div>
+  <div id="setupForm" style="display:none"><label>Administrator password<input id="setupAdmin" type="password" autocomplete="new-password"></label><label>Security password<input id="setupSecurity" type="password" autocomplete="new-password"></label><button class="btn o" id="setupSave">Save passwords</button></div>
+  <button class="btn o" id="setupOpen" style="display:none">Set initial passwords</button>
+ </div></div>
+</div>
+<div id="app" style="display:none">
+<header><div class="brand"><svg class="logo" aria-hidden="true"><use href="#i-logo"/></svg><div><h1>SRIT Crowd Management System</h1><small id="who"></small></div></div><div class="hc"><span id="clk"></span><button class="btn s" id="th"><svg class="ic" aria-hidden="true"><use href="#i-theme"/></svg>Theme</button><button class="btn s" id="lo"><svg class="ic" aria-hidden="true"><use href="#i-out"/></svg>Logout</button></div></header>
+<nav id="nav"></nav><main id="main"></main></div>
+<script>
+const $=id=>document.getElementById(id),H0=6,H1=22,DAY=864e5;
+const def=()=>({zones:["Main Gate:600","Canteen / Food Court:450","Library:300","Academic Block A:900","Academic Block B:800","Auditorium:1200","Sports Ground:500","Hostel Entrance:400"].map((s,i)=>({id:i+1,name:s.split(":")[0],cap:+s.split(":")[1],count:0})),log:[],alerts:[],set:{warn:60,high:85,api:"",admin:"",sec:"",beep:true},nid:9});
+const KEY="sritcm",MAP_URL="https://geobits.onrender.com/";let S,fresh=false;try{S=JSON.parse(localStorage.getItem(KEY)||localStorage.getItem("bitcm"))}catch(e){}S=S||def();
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
+let role=null,tab="dash",zsel=0;
+const col=p=>p>=S.set.high?"var(--r)":p>=S.set.warn?"var(--y)":"var(--g)",lab=p=>p>=S.set.high?"High":p>=S.set.warn?"Medium":"Low";
+const pc=z=>Math.round(z.count/z.cap*100),tm=t=>new Date(t).toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"}),day0=(t=Date.now())=>new Date(t).setHours(0,0,0,0);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function toast(m){const t=$("toast");t.textContent=m;t.style.display="block";clearTimeout(t.h);t.h=setTimeout(()=>t.style.display="none",6000);
+ if(S.set.beep)try{const a=new AudioContext(),o=a.createOscillator();o.connect(a.destination);o.frequency.value=880;o.start();o.stop(a.currentTime+.25)}catch(e){}}
+function change(id,d,set){const z=S.zones.find(x=>x.id==id);if(!z)return;const before=pc(z),nc=set!=null?Math.max(0,set):Math.max(0,z.count+d);d=nc-z.count;if(!d&&set==null)return;z.count=nc;
+ S.log.push({t:Date.now(),z:id,d,c:nc});if(S.log.length>8000)S.log=S.log.slice(-6000);
+ if(before<S.set.high&&pc(z)>=S.set.high){const m=`${z.name} reached ${pc(z)}% (${z.count}/${z.cap}) at ${tm(Date.now())}`;S.alerts.unshift({t:Date.now(),m});S.alerts=S.alerts.slice(0,40);toast("⚠ "+m)}
+ save();draw()}
+// views
+const kpi=a=>a.map(k=>`<div class="k"><b style="font-size:${String(k[0]).length>10?'1.2rem':'1.9rem'}">${k[0]}</b><span>${k[1]}</span></div>`).join("");
+const applyVars=()=>{const r=document.documentElement.style;r.setProperty("--tw",S.set.warn+"%");r.setProperty("--th",S.set.high+"%")};
+const dots=p=>{const l=Math.min(100,Math.round(p)),o=[];for(let i=0;i<100;i++)o.push(i<l?`<i class="l" style="--d:${i>>2}"></i>`:"<i></i>");return o.join("")};
+const ztag=p=>`<span class="tag" style="background:${col(p)}">${lab(p)}</span>`,zbar=p=>`<div class="bar"><i style="width:${Math.min(p,100)}%;background:${col(p)}"></i></div>`;
+function vDash(){const Z=S.zones,tot=Z.reduce((a,z)=>a+z.count,0),cap=Z.reduce((a,z)=>a+z.cap,0)||1,hi=Z.filter(z=>pc(z)>=S.set.high).length,pk=[...Z].sort((a,b)=>pc(b)-pc(a))[0],p=Math.round(tot/cap*100);
+ return `<section class="hero" aria-label="Campus occupancy"><div><div class="hh"><div class="hp">${p}<small>%</small></div><div class="hd"><b>${lab(p)} crowd level</b><span>Overall campus occupancy</span></div></div>
+ <div class="dots${fresh?" fresh":""}" style="--c:${col(p)}" role="img" aria-label="${p}% of total campus capacity in use">${dots(p)}</div>
+ <div class="tk"><span style="left:${S.set.warn}%">${S.set.warn}%</span><span style="left:${S.set.high}%">${S.set.high}%</span></div>
+ <p class="lg">Each dot is 1% of total campus capacity. Ticks mark where Medium and High levels start.</p></div>
+ <div class="hk">${kpi([[tot.toLocaleString(),"People in tracked zones"],[hi,"High-density zones"],[pk?esc(pk.name)+" ("+pc(pk)+"%)":"-","Busiest zone"]])}</div></section>
+ <div class="card"><h2>Zone status</h2><div class="zones">${Z.map(z=>{const q=pc(z);return `<div class="z"><div class="t">${esc(z.name)}${ztag(q)}</div>${zbar(q)}<div class="zf"><span class="zp">${q}<small>%</small></span><span class="mu">${z.count} of ${z.cap} people</span></div></div>`}).join("")}</div></div>
+ ${role?`<div class="card"><h2>Recent alerts</h2>${S.alerts.slice(0,6).map(a=>`<div class="alert">${esc(a.m)}</div>`).join("")||'<div class="mu">No alerts yet. One appears when a zone reaches the High level.</div>'}</div>`:""}`}
+function vCount(){return `<div class="card"><h2>Live counter</h2><p class="mu">Tap + when people enter and − when they leave. Use ±10 for groups. Entries are time-stamped automatically.</p><div class="zones">${S.zones.map(z=>{const q=pc(z);return `<div class="z"><div class="t">${esc(z.name)}${ztag(q)}</div><div class="zf" style="margin-top:8px"><span class="zp">${z.count}<small> / ${z.cap}</small></span><span class="mu">${q}% full</span></div>${zbar(q)}
+ <div class="cb"><button class="b btn r" onclick="change(${z.id},-10)">−10</button><button class="b btn r" onclick="change(${z.id},-1)">−1</button><button class="b btn g" onclick="change(${z.id},1)">+1</button><button class="b btn g" onclick="change(${z.id},10)">+10</button></div>
+ <div class="cb"><button class="b btn o" style="font-size:.75rem" onclick="var v=prompt('Set exact count for ${esc(z.name)}',${z.count});if(v!==null&&!isNaN(v)&&v!=='')change(${z.id},0,+v)">Set count</button></div></div>`}).join("")}</div></div>`}
+function hourly(zid,d0){const ev=S.log.filter(e=>e.z==zid);let last=0;ev.filter(e=>e.t<d0).forEach(e=>last=e.c);const o=[];for(let h=H0;h<=H1;h++){const f=d0+h*36e5,t=f+36e5;if(f>Date.now()){o.push(0);continue}let m=last;ev.filter(e=>e.t>=f&&e.t<t).forEach(e=>{m=Math.max(m,e.c);last=e.c});o.push(m)}return o}
+function bars(d,l,hl,c,w=560,h=210){const m=Math.max(...d,1),bw=w/d.length;return `<svg viewBox="0 0 ${w} ${h}">`+d.map((v,i)=>{const bh=v/m*(h-50);return `<text x="${i*bw+bw/2}" y="${h-24-bh}" font-size="10" text-anchor="middle" fill="var(--mu)">${v}</text><rect x="${i*bw+4}" y="${h-20-bh}" width="${bw-8}" height="${bh}" rx="3" fill="${i==hl?'var(--r)':c||'var(--ac)'}"/><text x="${i*bw+bw/2}" y="${h-6}" font-size="10" text-anchor="middle" fill="var(--mu)">${l[i]}</text>`}).join("")+"</svg>"}
+function vAn(){const z=S.zones[zsel]||S.zones[0],d0=day0(),hs=[...Array(H1-H0+1)].map((_,i)=>i+H0),hd=hourly(z.id,d0),cur=new Date().getHours()-H0;
+ const wk=[...Array(7)].map((_,i)=>{const s=d0-(6-i)*DAY;return S.log.filter(e=>e.t>=s&&e.t<s+DAY&&e.d>0).reduce((a,e)=>a+e.d,0)}),wl=[...Array(7)].map((_,i)=>new Date(d0-(6-i)*DAY).toLocaleDateString([],{weekday:"short"}));
+ const hm=S.zones.map(q=>({q,h:hourly(q.id,d0)}));
+ return `<div class="two"><div class="card"><h2>Today: peak count per hour <select onchange="zsel=this.selectedIndex;draw()">${S.zones.map((q,i)=>`<option ${i==zsel?"selected":""}>${esc(q.name)}</option>`).join("")}</select></h2><div class="sc">${bars(hd,hs.map(h=>h%12||12),cur)}</div></div>
+ <div class="card"><h2>Entries per day (last 7 days, all zones)</h2><div class="sc">${bars(wk,wl,6,"#7c3aed")}</div></div></div>
+ <div class="card"><h2>Today's occupancy heatmap (% of capacity)</h2><div class="sc"><table class=hm><tr><th class=n>Zone</th>${hs.map(h=>`<th>${h%12||12}</th>`).join("")}</tr>${hm.map(r=>`<tr><td class=n>${esc(r.q.name)}</td>${r.h.map(v=>{const p=Math.round(v/r.q.cap*100);return `<td style="background:${v?col(p):'transparent'};color:${v?'#fff':'var(--mu)'}">${v?p:"·"}</td>`}).join("")}</tr>`).join("")}</table></div></div>`}
+function repRows(){const d0=day0();return S.zones.map(z=>{const ev=S.log.filter(e=>e.z==z.id&&e.t>=d0);let pk=0,pt=null;ev.forEach(e=>{if(e.c>=pk){pk=e.c;pt=e.t}});return {z,en:ev.filter(e=>e.d>0).reduce((a,e)=>a+e.d,0),pk,pt}})}
+function vRep(){const R=repRows();return `<div class="card"><h2>Daily report — ${new Date().toLocaleDateString([],{dateStyle:"full"})}</h2><div class="sc"><table><tr><th class=n>Zone</th><th>Capacity</th><th>Entries today</th><th>Peak count</th><th>Peak time</th><th>Peak %</th><th>Now</th></tr>${R.map(r=>`<tr><td class=n>${esc(r.z.name)}</td><td>${r.z.cap}</td><td>${r.en}</td><td>${r.pk}</td><td>${r.pt?tm(r.pt):"-"}</td><td style="color:${col(r.pk/r.z.cap*100)};font-weight:600">${Math.round(r.pk/r.z.cap*100)}%</td><td>${r.z.count}</td></tr>`).join("")}</table></div>
+ <div class="row np"><button class="btn" onclick="print()">Print / Save PDF</button><button class="btn g" onclick="dl('srit_daily_report.csv','zone,capacity,entries_today,peak_count,peak_time,peak_pct,now\\n'+repRows().map(r=>[r.z.name,r.z.cap,r.en,r.pk,r.pt?tm(r.pt):'',Math.round(r.pk/r.z.cap*100),r.z.count].join(',')).join('\\n'),'text/csv')">Download report CSV</button><button class="btn o" onclick="dl('srit_event_log.csv','time,zone,change,count\\n'+S.log.map(e=>[new Date(e.t).toISOString(),(S.zones.find(z=>z.id==e.z)||{}).name,e.d,e.c].join(',')).join('\\n'),'text/csv')">Download full event log</button></div></div>
+ <div class="card"><h2>Alert history</h2>${S.alerts.map(a=>`<div class="alert">${new Date(a.t).toLocaleString()} — ${esc(a.m)}</div>`).join("")||'<div class="mu">No alerts recorded.</div>'}</div>`}
+function vMap(){return `<div class="card"><h2>Campus map</h2><p class="mu">Search halls, departments and venues. If blank, open in a new tab.</p><iframe src="${MAP_URL}" title="Campus map"></iframe><p><a class="btn" target="_blank" rel="noopener" href="${MAP_URL}">Open full map</a></p></div>`}
+function vSet(){return `<div class="card"><h2>Zones &amp; capacity</h2><div class="sc"><table><tr><th class=n>Name</th><th>Capacity</th><th></th></tr>${S.zones.map(z=>`<tr><td><input value="${esc(z.name)}" onchange="ed(${z.id},'name',this.value)"></td><td><input type="number" min="1" value="${z.cap}" onchange="ed(${z.id},'cap',this.value)"></td><td><button class="btn r" onclick="rm(${z.id})">Delete</button></td></tr>`).join("")}</table></div>
+ <div class="row"><input id="nn" placeholder="New zone name"><input id="nc" type="number" placeholder="Capacity" style="width:110px"><button class="btn g" onclick="add()">Add zone</button></div></div>
+ <div class="card"><h2>Alert thresholds &amp; options</h2><div class="row">Medium from <input type="number" id="sw" value="${S.set.warn}" style="width:70px">% · High from <input type="number" id="sh" value="${S.set.high}" style="width:70px">% <label><input type="checkbox" id="sb" ${S.set.beep?"checked":""}> Beep on alert</label></div>
+ <div class="row">Live data API URL (optional): <input id="sa" value="${esc(S.set.api)}" placeholder="https://your-server/api/counts" style="flex:1;min-width:220px"></div><p class="mu">API must return JSON like <code>[{"zone":"Library","count":123}]</code> and allow CORS. It is polled every 10 seconds. <span id="as"></span></p>
+ <div class="row"><button class="btn" onclick="sv()">Save settings</button></div></div>
+ <div class="card"><h2>User passwords</h2><div class="row">Admin <input id="pa" type="password" placeholder="new password"> Security <input id="ps" type="password" placeholder="new password"> <button class="btn" onclick="pw()">Update</button></div><p class="mu">Note: this login is stored in the browser and is for access control on a shared screen, not strong security. For campus-wide use, host the page behind your college login/VPN.</p></div>
+ <div class="card"><h2>Data tools</h2><div class="row"><button class="btn g" onclick="demo()">Load demo data</button><button class="btn" onclick="dl('srit_backup.json',JSON.stringify(S),'application/json')">Backup (JSON)</button><label class="btn o">Restore backup<input type="file" accept=".json" hidden onchange="rs(this)"></label><label class="btn o">Import CSV (zone,count)<input type="file" accept=".csv" hidden onchange="ic(this)"></label><button class="btn r" onclick="if(confirm('Clear all counts, logs and alerts?')){S.log=[];S.alerts=[];S.zones.forEach(z=>z.count=0);save();draw();toast('Cleared')}">Clear logs &amp; counts</button></div></div>`}
+// actions
+function ed(id,k,v){const z=S.zones.find(x=>x.id==id);z[k]=k=="cap"?Math.max(1,+v||1):v.trim()||z.name;save()}
+function rm(id){if(confirm("Delete this zone?")){S.zones=S.zones.filter(z=>z.id!=id);save();draw(1)}}
+function add(){const n=$("nn").value.trim(),c=+$("nc").value;if(!n||!c)return;S.zones.push({id:S.nid++,name:n,cap:c,count:0});save();draw(1)}
+function sv(){S.set.warn=+$("sw").value||60;S.set.high=+$("sh").value||85;S.set.beep=$("sb").checked;S.set.api=$("sa").value.trim();save();poll();toast("Settings saved")}
+function pw(){if($("pa").value)S.set.admin=$("pa").value;if($("ps").value)S.set.sec=$("ps").value;save();toast("Passwords updated")}
+function dl(n,t,m){const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([t],{type:m}));a.download=n;a.click()}
+function rs(i){const f=i.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{S=JSON.parse(r.result);save();draw(1);toast("Backup restored")}catch(e){alert("Invalid backup file")}};r.readAsText(f)}
+function ic(i){const f=i.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{let n=0;r.result.split(/\r?\n/).forEach(l=>{const p=l.split(",").map(s=>s.trim()),z=S.zones.find(x=>x.name.toLowerCase()==p[0].toLowerCase());if(z&&p[1]!==""&&!isNaN(p[1])){change(z.id,0,+p[1]);n++}});draw(1);alert(n+" zone(s) updated")};r.readAsText(f)}
+function demo(){const now=Date.now(),d0=day0();S.log=[];S.zones.forEach((z,zi)=>{const p1=8+(zi%4)*1.2,p2=14+zi%3,w=1.4+(zi%3)*.4;for(let d=6;d>=0;d--){const s=d0-d*DAY,f=[1,1.05,1,1.08,.95,.3,.1][new Date(s).getDay()==0?6:new Date(s).getDay()-1];let prev=0;for(let h=7;h<=19;h++){const t=s+h*36e5+60000;if(t>now)break;const c=Math.round(z.cap*f*Math.min(1,.06+.55*Math.exp(-((h-p1)**2)/(2*w*w))+.5*Math.exp(-((h-p2)**2)/(2*w*w)))*(.9+Math.random()*.2));S.log.push({t,z:z.id,d:c-prev,c});prev=c;z.count=c}}});S.log.sort((a,b)=>a.t-b.t);save();draw(1);toast("Demo data loaded")}
+let apiT;function poll(){clearInterval(apiT);if(!S.set.api)return;const run=()=>fetch(S.set.api).then(r=>r.json()).then(a=>{a.forEach(o=>{const z=S.zones.find(x=>x.name.toLowerCase()==String(o.zone).toLowerCase());if(z&&+o.count!=z.count)change(z.id,0,+o.count)});const e=$("as");if(e)e.textContent="Last update OK "+tm(Date.now())}).catch(()=>{const e=$("as");if(e)e.textContent="API error"});run();apiT=setInterval(run,1e4)}
+// shell
+const TABS=[["dash","Dashboard",vDash,["admin","security","public"]],["count","Counter",vCount,["admin","security"]],["an","Analytics",vAn,["admin","security"]],["rep","Reports",vRep,["admin"]],["map","Campus Map",vMap,["admin","security","public"]],["set","Settings",vSet,["admin"]]];
+function draw(force){const t=TABS.find(x=>x[0]==tab);if(!t||!role)return;if(tab=="set"&&!force)return;if(tab=="map"&&!force&&$("main").querySelector("iframe"))return;applyVars();$("main").innerHTML=t[2]();fresh=false}
+function nav(){$("nav").innerHTML="";TABS.filter(t=>t[3].includes(role)).forEach(t=>{const b=document.createElement("button");b.innerHTML=`<svg class="ic" aria-hidden="true"><use href="#i-${t[0]}"/></svg>${t[1]}`;b.className=t[0]==tab?"on":"";if(t[0]==tab)b.setAttribute("aria-current","page");b.onclick=()=>{tab=t[0];fresh=true;nav();draw(1)};$("nav").appendChild(b)})}
+function enter(r){role=r;$("login").style.display="none";$("app").style.display="block";$("who").textContent="Signed in as "+(r=="public"?"Public viewer":r=="admin"?"Administrator":"Security staff");tab="dash";fresh=true;nav();draw(1);poll()}
+const needsPasswordSetup=()=>!S.set.admin||!S.set.sec;
+const refreshPasswordSetup=()=>{const needed=needsPasswordSetup();$("setupHint").style.display=needed?"block":"none";$("setupOpen").style.display=needed?"block":"none"};
+$("setupOpen").onclick=()=>{$("setupForm").style.display="block";$("setupOpen").style.display="none";$("setupHint").textContent="Choose passwords of at least 8 characters."};
+$("setupSave").onclick=()=>{const admin=$("setupAdmin").value,security=$("setupSecurity").value;if(admin.length<8||security.length<8){$("setupHint").textContent="Both passwords must be at least 8 characters.";$("setupHint").style.display="block";return}S.set.admin=admin;S.set.sec=security;save();$("setupForm").style.display="none";refreshPasswordSetup()};
+refreshPasswordSetup();
+$("lb").onclick=()=>{if(needsPasswordSetup()){$("le").textContent="Set initial passwords before signing in.";return}const u=$("lu").value.trim().toLowerCase(),p=$("lp").value;if(u=="admin"&&p==S.set.admin)enter("admin");else if(u=="security"&&p==S.set.sec)enter("security");else $("le").textContent="Incorrect username or password. Check both and try again."};
+$("lp").onkeydown=e=>{if(e.key=="Enter")$("lb").click()};$("pb").onclick=()=>enter("public");
+$("lo").onclick=()=>{role=null;clearInterval(apiT);$("app").style.display="none";$("login").style.display="grid";$("lp").value=""};
+$("th").onclick=()=>{const d=document.documentElement;d.dataset.theme=d.dataset.theme=="dark"?"light":"dark"};
+setInterval(()=>{$("clk").textContent=new Date().toLocaleString()},1000);
+setInterval(()=>{if(role&&tab!="set"&&tab!="map")S=JSON.parse(localStorage.getItem(KEY)||"null")||S,draw()},5000); // sync between tabs/devices on same browser
+(()=>{const f=$("lf");let h="";for(let r=0;r<9;r++)for(let c=0;c<24;c++){const x=Math.random();h+=`<i class="${x<.55?"g":x<.75?"y":x<.82?"r":""}" style="--d:${c+r}"></i>`}f.innerHTML=h})();
+</script></body></html>
